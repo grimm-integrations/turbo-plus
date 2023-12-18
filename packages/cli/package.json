@@ -1,0 +1,29 @@
+{
+  "name": "turbo-plus",
+  "module": "index.ts",
+  "type": "module",
+  "description": "The Turbo CLI for your needs.",
+  "version": "0.1.0",
+  "homepage": "https://turbo-plus.com",
+  "license": "MIT",
+  "author": {
+    "name": "dontfred",
+    "url": "https://github.com/dontfred"
+  },
+  "keywords": [
+    "turbo",
+    "turborepo",
+    "cli",
+    "monorepo",
+    "tailwind",
+    "storybook",
+    "nextjs",
+    "next"
+  ],
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
