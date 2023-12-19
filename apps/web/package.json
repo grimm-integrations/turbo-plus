@@ -26,6 +26,7 @@
     "tailwindcss": "^3.3.0",
     "tailwind-config": "*",
     "eslint": "^8",
-    "eslint-config-next": "latest"
+    "eslint-config-next": "latest",
+    "eslint-config-custom": "*"
   }
 }

@@ -1,13 +1,4 @@
 {
-  "private": true,
-  "license": "MIT",
-  "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "clean": "turbo run clean && rm -rf node_modules && rm -rf .turbo && rm -rf bun.lockb && bun install",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
   "devDependencies": {
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
@@ -15,7 +6,16 @@
     "tsconfig": "*",
     "turbo": "latest"
   },
+  "license": "MIT",
   "packageManager": "bun@1.0.7",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "clean": "turbo run clean && rm -rf node_modules && rm -rf .turbo && rm -rf bun.lockb && bun install",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
