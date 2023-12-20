@@ -4,6 +4,7 @@ import chalk from "chalk";
 // import { logger } from "./utils/logger";
 import { create } from "./commands/create";
 import { getPackageInfo } from "./utils/get-package-info";
+import { logger } from "./utils/logger";
 
 async function main(): Promise<void> {
   const packageInfo = await getPackageInfo();
@@ -46,4 +47,8 @@ ${chalk.italic(
   program.parse();
 }
 
-await main();
+await main().catch((error) => {
+  logger.warn("Aborting installation.");
+  logger.error(error);
+  process.exit(1);
+});
