@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import chalk from "chalk";
-// import { logger } from "./utils/logger";
 import { create } from "./commands/create";
 import { getPackageInfo } from "./utils/get-package-info";
 import { logger } from "./utils/logger";
@@ -11,12 +10,10 @@ async function main(): Promise<void> {
 
   const program = new Command()
     .name(
-      chalk.bold(
-        `${chalk.red("turbo")}${chalk.black("-")}${chalk.blue("plus")}`,
-      ),
+      chalk.bold(`${chalk.red("turbo")}${chalk.dim("-")}${chalk.blue("plus")}`),
     )
     .description(
-      `${chalk.red("The Turbo CLI to")} ${chalk.black("work")} ${chalk.blue(
+      `${chalk.red("The Turbo CLI to")} ${chalk.dim("work")} ${chalk.blue(
         "with turbo easily",
       )}
 \n- Storybook
@@ -31,7 +28,7 @@ async function main(): Promise<void> {
 ${chalk.bold(packageInfo.version)}
 ${chalk.italic(
   `Use ${chalk.bold(
-    `${chalk.red("turbo")}${chalk.black("-")}${chalk.blue("plus")}${chalk.dim(
+    `${chalk.red("turbo")}${chalk.dim("-")}${chalk.blue("plus")}${chalk.dim(
       "@latest",
     )}`,
   )} to get always the latest version`,

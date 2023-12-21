@@ -43,23 +43,18 @@ export async function createApp(options: CreateAppOptions): Promise<void> {
   const projectTemplate = `${packageManager}-${typescript ? "ts" : "js"}-${
     tailwind ? "tailwind" : "no-tailwind"
   }`;
+  const LoadingState = ora({
+    text: "Loading...",
+    spinner: "growHorizontal",
+  }).start();
   try {
-    const CloningProject = ora({
-      text: "1. Cloning Project",
-      spinner: "growHorizontal",
-    }).start();
+    LoadingState.text = "1. Cloning project";
     await fs.copy(
       path.join(templates, `../templates/${projectTemplate}`),
       `${projectPath}/${name}`,
     );
-    CloningProject.stop();
-    logger.info("Project cloned");
-
     // Write Storybook files
-    const Storybook = ora({
-      text: "2. Writing Storybook files",
-      spinner: "growHorizontal",
-    }).start();
+    LoadingState.text = "2. Writing Storybook files";
     await fs.writeFile(
       `${projectPath}/${name}/apps/storybook/package.json`,
       createStorybookJSON(name),
@@ -102,14 +97,8 @@ export async function createApp(options: CreateAppOptions): Promise<void> {
       "utf8",
     );
 
-    Storybook.stop();
-    logger.info("Storybook files created");
-
     // Write Next files
-    const Next = ora({
-      text: "3. Writing Next files",
-      spinner: "growHorizontal",
-    }).start();
+    LoadingState.text = "3. Writing Next files";
     await fs.writeFile(
       `${projectPath}/${name}/apps/web/package.json`,
       createNextJSON(name),
@@ -140,14 +129,8 @@ export async function createApp(options: CreateAppOptions): Promise<void> {
       "utf8",
     );
 
-    Next.stop();
-    logger.info("Next files created");
-
     // Write UI files
-    const UI = ora({
-      text: "4. Writing UI files",
-      spinner: "growHorizontal",
-    }).start();
+    LoadingState.text = "4. Writing UI files";
     await fs.writeFile(
       `${projectPath}/${name}/packages/ui/package.json`,
       createUIJSON(name),
@@ -165,14 +148,9 @@ export async function createApp(options: CreateAppOptions): Promise<void> {
       createReactTSConfig(name),
       "utf8",
     );
-    UI.stop();
-    logger.info("UI files created");
 
     // Renaming Config files
-    const Config = ora({
-      text: "5. Renaming Config files",
-      spinner: "growHorizontal",
-    }).start();
+    LoadingState.text = "5. Renaming Config files";
     await fs.rename(
       `${projectPath}/${name}/packages/eslint-config-custom/turboplus-next.js`,
       `${projectPath}/${name}/packages/eslint-config-custom/${name.replace(
@@ -221,43 +199,36 @@ export async function createApp(options: CreateAppOptions): Promise<void> {
       )}-storybook.json`,
     );
 
-    Config.stop();
-    logger.info("Config files renamed");
-
     // Write LICENSE
-    const License = ora({
-      text: "6. Writing LICENSE file",
-      spinner: "growHorizontal",
-    }).start();
+    LoadingState.text = "6. Writing LICENSE file";
     await fs.writeFile(
       `${projectPath}/${name}/LICENSE.md`,
       createLicense(name, "MIT"),
       "utf8",
     );
-    License.stop();
-    logger.info("LICENSE file created");
 
-    const CleanProject = ora({
-      text: "7. Clean up project",
-      spinner: "growHorizontal",
-    }).start();
+    LoadingState.text = "7. Installing dependencies";
 
-    await execa(packageManager, ["run", "clean"]);
+    process.chdir(`${projectPath}/${name}`);
     await execa(packageManager, ["install"]);
 
-    CleanProject.stop();
+    LoadingState.stop();
 
     logger.success("turbo-plus create was successful");
     console.log(`
 ${chalk.bold(
-  `Welcome to ${chalk.red("turbo")}${chalk.black("-")}${chalk.blue("plus")}`,
+  `Welcome to ${chalk.red("turbo")}${chalk.dim("-")}${chalk.blue("plus")}`,
 )}
 
 ${chalk.bold("Get started with the following commands:")}
-${chalk.bold("cd")} ${name}
+${chalk.bold("cd")} ${projectPath}/${name}
 ${chalk.bold("bun")} run dev
     `);
   } catch (error) {
+    LoadingState.stopAndPersist({
+      symbol: "❌",
+      text: "Error",
+    });
     logger.warn("turbo-plus create was aborted");
     logger.error(error);
   }

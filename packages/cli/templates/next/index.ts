@@ -72,7 +72,7 @@ export default function Home(): JSX.Element {
         <div className="absolute top-1/2 -z-10 h-52 w-full -translate-y-1/2 bg-[conic-gradient(from_180deg_at_50%_50%,_#2a8af6_0deg,_#a853ba_180deg,_#e92a67_360deg)] blur-3xl" />
       </div>
       <div className="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-6">
-        <Card href="/" title="Turbo Plus Repo">
+        <Card href="https://github.com/grimm-integrations/turbo-plus" title="Turbo Plus Repo">
           See and contribute to the Turbo Plus repo.
         </Card>
         <Card href="https://grimm-integrations.cc" title="Grimm Integrations">
